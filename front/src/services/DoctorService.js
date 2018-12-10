@@ -44,6 +44,9 @@ let DoctorService = {
 
        return callApi('get', 'getDoctors');
     },
+    getSpecialty: ()=>{
+        return callApi('get', 'getSpecialty');
+    },
     addDoctor: (doctor)=>{
         return callApi('post', 'addDoctor', doctor);
     },

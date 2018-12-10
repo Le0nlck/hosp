@@ -1,14 +1,11 @@
 <template>
     <div>
         <div class="changeImage">
-            <input type="file" @change="onFileSelected()">
-            <img v-if="selectedFile" :src="selectedFile.src">
+            <input type="file" @change="onFileSelected">
+            <img v-if="doctor && doctor.src" :src="doctor.src">
             <button @click="onUpload()">
                 Upload
             </button>
-        </div>
-        <div>
-            <input type="text" v-model="doctor.name"/>
         </div>
 
     </div>
@@ -28,19 +25,20 @@
             }
         },
         methods:{
-            onFileSelected(){
-                this.selectedFile = event.target.files[0]
+            onFileSelected(event){
+                this.selectedFile = event.target.files[0];
+            },
+            imageIsLoaded(event){
+                this.doctor.src = event.target.result;
+                this.doctor = {...this.doctor};
             },
             onUpload(){
-                let fd = new FormData();
-                fd.append('image',this.selectedFile, this.selectedFile.name)
-                debugger;
+                let fr = new FileReader();
+                fr.onload = this.imageIsLoaded;
 
-                return DoctorService.loadImage(fd).then((res)=> {
-
-                });
+                fr.readAsDataURL(this.selectedFile);
             }
-        }
+        },
     }
 </script>
 

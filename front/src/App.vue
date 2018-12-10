@@ -1,8 +1,8 @@
 <template>
     <div id="app">
         <div id="nav">
-            <router-link to="/">Просмотр</router-link>
-            <router-link to="/editTable">Редактирование</router-link>
+            <router-link class="link" to="/">Просмотр</router-link>
+            <router-link class="link" to="/editTable">Редактирование</router-link>
         </div>
         <router-view/>
     </div>
@@ -10,7 +10,11 @@
 
 <script>
 </script>
-<style lang="scss">
+<style lang="scss" >
+    body{
+        margin: 0;
+    }
+
     #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -21,12 +25,17 @@
 
     #nav {
         padding: 30px;
+        background: #f9ead0;
+
         a {
             font-weight: bold;
             color: #2c3e50;
             &.router-link-exact-active {
-                color: #42b983;
+                color: #8e64b3;
             }
         }
+    }
+    .link{
+        margin-left: 20px;
     }
 </style>
