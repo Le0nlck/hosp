@@ -1,3 +1,5 @@
+var ObjectID = require('mongodb').ObjectID;
+
 const baseName = "testbase";
 
 module.exports = function(app, client) {
@@ -74,11 +76,11 @@ module.exports = function(app, client) {
 
         if (doctorsToUpdate) {
             let db = client.db(baseName); //название базы
-            db.collection('doctors').findOneAndUpdate({"_id" : "5c0c1271e7179a2e27050069"}, {$set: {"name" : "Пипирка1"}},(err,result) => {
+
+            db.collection('doctors').findOneAndUpdate({"_id" : ObjectID("5c0c1271e7179a2e27050069")}, {$set: {"name" : "Пипирка1"}},(err,result) => {
                 if (err) {
                     res.send({'error': 'An error has occurred'});
                 } else {
-
                     res.send(result);
                 }
             })
