@@ -3,30 +3,30 @@
         <table class="doc-table w100">
             <thead>
                 <tr>
-                    <td>№ уч.</td>
-                    <td>№ каб.</td>
-                    <td>  Фото </td>
-                    <td>ФИО.</td>
-                    <td>Пн</td>
-                    <td>Вт</td>
-                    <td>Ср</td>
-                    <td>Чт</td>
-                    <td>Пт</td>
-                    <td></td>
+                    <th>№ уч.</th>
+                    <th>№ каб.</th>
+                    <th>  Фото </th>
+                    <th>ФИО.</th>
+                    <th>Пн</th>
+                    <th>Вт</th>
+                    <th>Ср</th>
+                    <th>Чт</th>
+                    <th>Пт</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="w100">
                 <tr v-for="(doctor,index) in doctors" :key="doctor._id" class="w100">
-                    <td >{{index + 1}}</td>
-                    <td v-if="doctor.spec"> {{getSpecialtyById(doctor.spec)}}</td>
-                    <td v-if="doctor.image"> <img class="doc-image" :src="doctor.image"> </td>
-                    <td v-if="doctor.name"> {{doctor.name}}</td>
-                    <td v-if="doctor.number"> {{doctor.number}}</td>
-                    <td v-if="doctor.d1"> {{doctor.d1}}</td>
-                    <td v-if="doctor.d2"> {{doctor.d2}}</td>
-                    <td v-if="doctor.d3"> {{doctor.d3}}</td>
-                    <td v-if="doctor.d4"> {{doctor.d4}}</td>
-                    <td v-if="doctor.d5"> {{doctor.d5}}</td>
+                    <td>{{index + 1}}</td>
+                    <td> {{getSpecialtyById(doctor.spec)}}</td>
+                    <td> <img class="doc-image" :src="doctor.image"> </td>
+                    <td> {{doctor.name}}</td>
+                    <td> {{doctor.number}}</td>
+                    <td> {{doctor.d1}}</td>
+                    <td> {{doctor.d2}}</td>
+                    <td> {{doctor.d3}}</td>
+                    <td> {{doctor.d4}}</td>
+                    <td> {{doctor.d5}}</td>
                 </tr>
             </tbody>
         </table>
@@ -76,7 +76,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" >
 
     .home{
         margin-top: 20px;
@@ -87,10 +87,10 @@
     .doc-table{
         border-collapse: collapse;
         .doc-image{
-            height: 200px;
+            height: 40px;
         }
     }
-    .doc-table td, .doc-table th {
+    .doc-table th {
         padding: 10px;
     }
     .doc-table thead{
