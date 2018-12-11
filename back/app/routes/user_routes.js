@@ -65,4 +65,9 @@ module.exports = function(app, client) {
             res.send({ 'error': 'Can not find _id in collection' });
         }
     });
+
+    app.post('/saveDoctors', (req, res) => {
+
+        let docotors = req.body.doctors;
+    });
 };

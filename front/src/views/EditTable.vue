@@ -5,30 +5,30 @@
             <tr v-for="(doctor,index) in doctors" :key="doctor._id" class="w100">
                 <td >{{index + 1}}</td>
                 <td v-if="doctor.spec">
-                    {{getSpecialtyById(doctor.spec)}}
                     <select v-model="doctor.spec" >
                         <!--<option disabled value="">Выберите один из вариантов</option>-->
                         <option v-for="spec in specialty" :value="spec._id" :key="spec._id" > {{spec.name}}</option>
                     </select>
                 </td>
-                <td v-if="doctor.number"> {{doctor.number}}</td>
-                <td v-if="doctor.name"> {{doctor.name}}</td>
-                <td v-if="doctor.d1"> {{doctor.d1}}</td>
-                <td v-if="doctor.d2"> {{doctor.d2}}</td>
-                <td v-if="doctor.d3"> {{doctor.d3}}</td>
-                <td v-if="doctor.d4"> {{doctor.d4}}</td>
-                <td v-if="doctor.d5"> {{doctor.d5}}</td>
-                <td v-if="doctor.image">
-                    <img :src="doctor.image.src" >
+                <td > {{doctor.number}}</td>
+                <td > {{doctor.name}}</td>
+                <td > {{doctor.d1}}</td>
+                <td > {{doctor.d2}}</td>
+                <td > {{doctor.d3}}</td>
+                <td > {{doctor.d4}}</td>
+                <td > {{doctor.d5}}</td>
+                <td >
+                    <img v-if="doctor && doctor.src" :src="doctor.image.src" >
+                    <edit-doctor v-if="doctor" :doctor="doctor"></edit-doctor>
                 </td>
-                <td><button @click="editDoctor(doctor)"> Редактировать </button></td>
-                <edit-doctor :doctor="doctor"></edit-doctor>
+                <!--<td><button @click="editDoctor(doctor)"> Редактировать </button></td>-->
+                <!---->
             </tr>
             </tbody>
         </table>
         <div class="content">
             <div class="buttons-box">
-                <button class="btn" @click="saveDoctors" >Сохранить</button>
+                <button class="btn" @click="saveDoctors()" >Сохранить</button>
             </div>
         </div>
 
@@ -49,6 +49,14 @@
                 specialty: []
             }
         },
+        computed:{
+            editDoctors(){
+                let docs = {...this.doctors};
+                docs = docs.filter(doc => doc.spec);
+
+                return docs;
+            }
+        },
         mounted(){
             return Promise.all([
                 DoctorService.getDoctors(),
@@ -67,7 +75,7 @@
 
             },
             saveDoctors(){
-
+                return DoctorService.saveDoctors(this.doctors);
             },
             getSpecialtyById(id){
                 let spec = this.specialty.find((special) =>{

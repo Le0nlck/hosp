@@ -50,8 +50,11 @@ let DoctorService = {
     addDoctor: (doctor)=>{
         return callApi('post', 'addDoctor', doctor);
     },
-    loadImage:(formData)=>{
+    loadImage: (formData)=>{
         return callApi('post', 'loadImage', doctor)
+    },
+    saveDoctors: (doctors)=>{
+        return callApi('post', 'saveDoctors', doctors)
     }
 }
 
