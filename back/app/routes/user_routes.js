@@ -35,21 +35,10 @@ module.exports = function(app, client) {
 
     app.get('/getSpecialty', (req, res) => {
 
-        let results = [
-            {
-                _id: '1',
-                name: 'Хирург'
-            },
-            {
-                _id: '2',
-                name: 'Педиатр'
-            },
-            {
-                _id: '5c0e36b74636f4937ddce1db',
-                name: 'Терапевт'
-            }
-        ];
-        res.send(results);
+        db.collection('spec').find().toArray(function(err, results){
+
+            res.send(results);
+        });
     });
 
     app.post('/getDoctorById', (req, res) => {
