@@ -68,6 +68,34 @@ module.exports = function(app, client) {
 
     app.post('/saveDoctors', (req, res) => {
 
-        let docotors = req.body.doctors;
+        let doctors = req.body.doctors;
+        let doctorsToAdd = doctors.filter(doc => !doc._id);
+        let doctorsToUpdate = doctors.filter(doc => doc._id);
+
+        if (doctorsToUpdate) {
+            let db = client.db(baseName); //название базы
+            db.collection('doctors').findOneAndUpdate({"_id" : "5c0c1271e7179a2e27050069"}, {$set: {"name" : "Пипирка1"}},(err,result) => {
+                if (err) {
+                    res.send({'error': 'An error has occurred'});
+                } else {
+
+                    res.send(result);
+                }
+            })
+        }
+        else {
+            if (doctorsToAdd) {
+                let db = client.db(baseName); //название базы
+                db.collection('doctors').insertMany(doctors, (err, result) => {
+                    if (!err) {
+                        res.send(result.ops[0]);
+                    } else {
+                        res.send({'error': 'An error has occurred'});
+                    }
+                });
+            };
+        };
     });
 };
+
+

@@ -14,7 +14,7 @@ app.use(async (req, res, next) => {
     res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     next();
 });
-MongoClient.connect(db.url,{ useNewUrlParser: false }, (err, database) => {
+MongoClient.connect(db.url,{ useNewUrlParser: true }, (err, database) => {
     if (err) return console.log(err)
     require('./app/routes')(app, database);
     app.listen(port, () => {

@@ -2,7 +2,7 @@ import axios from 'axios';
 const uri = "http://localhost:9000";
 let callApi = (method, path, data)=>{
     if(method == 'post'){
-        return axios.post(uri + "/" + path, {body: data}).then((res)=>{
+        return axios.post(uri + "/" + path, data).then((res)=>{
             if(res.data){
                 return res.data;
             }
@@ -54,7 +54,7 @@ let DoctorService = {
         return callApi('post', 'loadImage', doctor)
     },
     saveDoctors: (doctors)=>{
-        return callApi('post', 'saveDoctors', doctors)
+        return callApi('post', 'saveDoctors', {doctors})
     }
 }
 
