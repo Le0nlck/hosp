@@ -56,47 +56,55 @@ module.exports = function(app, client) {
             res.send({ 'error': 'Can not find _id in collection' });
         }
     });
-
-    app.post('/loadImage', (req, res) => {
-
-        let image = req.body;
-        if(image){
-            res.send(image);
-        }
-        else{
-            res.send({ 'error': 'Can not find _id in collection' });
-        }
-    });
-
     app.post('/saveDoctors', (req, res) => {
 
+
+        let awaitUpdates = [];
         let doctors = req.body.doctors;
         let doctorsToAdd = doctors.filter(doc => !doc._id);
         let doctorsToUpdate = doctors.filter(doc => doc._id);
+        let doctorsToDelete = doctors.filter(doc => doc.isDeleted);
 
-        if (doctorsToUpdate) {
-            let db = client.db(baseName); //название базы
+        let db = client.db(baseName);
 
-            db.collection('doctors').findOneAndUpdate({"_id" : ObjectID("5c0c1271e7179a2e27050069")}, {$set: {"name" : "Пипирка1"}},(err,result) => {
-                if (err) {
-                    res.send({'error': 'An error has occurred'});
-                } else {
-                    res.send(result);
-                }
-            })
-        }
-        else {
-            if (doctorsToAdd) {
-                let db = client.db(baseName); //название базы
-                db.collection('doctors').insertMany(doctors, (err, result) => {
-                    if (!err) {
-                        res.send(result.ops[0]);
-                    } else {
-                        res.send({'error': 'An error has occurred'});
-                    }
-                });
-            };
-        };
+        doctorsToAdd.forEach((doc)=>{
+            let newObj = {
+                spec: doc.spec,
+                number: doc.number,
+                name: doc.name,
+                d1: doc.d1,
+                d2: doc.d2,
+                d3: doc.d3,
+                d4: doc.d4,
+                d5: doc.d5,
+                image: doc.image
+            }
+            awaitUpdates.push(db.collection('doctors').insert(newObj))
+        });
+
+        doctorsToUpdate.forEach((doc)=>{
+            awaitUpdates.push(db.collection('doctors').findOneAndUpdate({"_id" : ObjectID(doc._id)}, {$set:{
+                    spec: doc.spec,
+                    number: doc.number,
+                    name: doc.name,
+                    d1: doc.d1,
+                    d2: doc.d2,
+                    d3: doc.d3,
+                    d4: doc.d4,
+                    d5: doc.d5,
+                    image: doc.image
+                }}));
+        });
+        doctorsToDelete.forEach((doc)=>{
+            awaitUpdates.push(db.collection('doctors').findOneAndDelete({"_id" : ObjectID(doc._id)}));
+        });
+
+        Promise.all(awaitUpdates).then(()=>{
+            res.send("Сохранение прошло успешно")
+        }).catch((err) => {
+            res.send({'err': err});
+        })
+
     });
 };
 
