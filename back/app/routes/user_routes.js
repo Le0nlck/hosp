@@ -34,7 +34,7 @@ module.exports = function(app, client) {
     });
 
     app.get('/getSpecialty', (req, res) => {
-
+        let db = client.db(baseName); //название базы
         db.collection('spec').find().toArray(function(err, results){
 
             res.send(results);
