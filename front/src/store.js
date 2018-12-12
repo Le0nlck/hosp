@@ -43,6 +43,14 @@ export default new Vuex.Store({
             })
 
         },
+        reloadSpec(context){
+            return DoctorService.getSpecialty().then((specialty)=>{
+                if(specialty){
+                    context.commit("setSpecialty", specialty);
+                    return true;
+                }
+            })
+        }
     },
     mutations: {
         setDoctors(state, doctors){
