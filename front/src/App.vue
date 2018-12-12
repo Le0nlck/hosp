@@ -47,6 +47,12 @@
             }
         }
     }
+    .h2 {
+        font-size: 18px;
+        color: #5F5F5F;
+        font-weight: normal;
+        padding-left: 10px;
+    }
     .link{
         margin-left: 20px;
     }
