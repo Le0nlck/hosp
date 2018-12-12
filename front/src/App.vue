@@ -1,16 +1,24 @@
 <template>
     <div id="app">
         <div id="nav">
-            <router-link class="link" to="/">Расп. врачей</router-link>
-            <router-link class="link" to="/shedule">Расп. Участковых</router-link>
-            <router-link class="link" to="/editSpec">Ред. Специалистов</router-link>
-            <router-link class="link" to="/editTable">Редактирование</router-link>
+            <a class="link" title="Расп. врачей"><div @click="goTo('/')" class="doc-table-1-icon"></div></a>
+            <a class="link" title="Расп. Участковых"><div @click="goTo('/shedule')" class="doc-table-2-icon"></div></a>
+            <a class="link" title="Редактирование"><div @click="goTo('/editTable')" class="doc-edit-icon"></div></a>
+            <a class="link" title="Ред. специалистов"><div @click="goTo('/editSpec')" class="spec-edit-icon"></div></a>
         </div>
         <router-view/>
     </div>
 </template>
 
 <script>
+    export default {
+        name:"app",
+        methods:{
+            goTo(route){
+                this.$router.push(route);
+            }
+        }
+    }
 </script>
 <style lang="scss" >
     body{
@@ -26,7 +34,9 @@
     }
 
     #nav {
-        padding: 30px;
+        display: flex;
+        justify-content: flex-end;
+        padding: 10px;
         background: #f9ead0;
 
         a {
@@ -39,5 +49,29 @@
     }
     .link{
         margin-left: 20px;
+    }
+    .spec-edit-icon{
+        background-image: url("../src/assets/group.png");
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+    }
+    .doc-edit-icon{
+        background-image: url("../src/assets/settings.png");
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+    }
+    .doc-table-1-icon{
+        background-image: url("../src/assets/list.png");
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+    }
+    .doc-table-2-icon{
+        background-image: url("../src/assets/notepad.png");
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
     }
 </style>

@@ -118,6 +118,7 @@
 
                 return DoctorService.saveDoctors(resDocs).then(()=>{
                     this.reload();
+                    this.deletedDoctors = [];
                 });
             },
             removeDoctor(doctor, index){
