@@ -1,7 +1,9 @@
 <template>
     <div id="app">
         <div id="nav">
-            <router-link class="link" to="/">Просмотр</router-link>
+            <router-link class="link" to="/">Расп. врачей</router-link>
+            <router-link class="link" to="/shedule">Расп. Участковых</router-link>
+            <router-link class="link" to="/editSpec">Ред. Специалистов</router-link>
             <router-link class="link" to="/editTable">Редактирование</router-link>
         </div>
         <router-view/>
