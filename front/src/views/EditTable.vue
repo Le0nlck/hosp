@@ -1,10 +1,12 @@
 <template>
     <div class="home">
         <table class="doc-table w100">
+            <caption>Расписание работы врачей педиатров участковых</caption>
             <thead class="w100">
                 <tr>
                     <th></th>
                     <th>Должность</th>
+                    <th>Участок</th>
                     <th>Кабинет </th>
                     <th>ФИО.</th>
                     <th>Пн</th>
@@ -26,6 +28,7 @@
                         <option v-for="spec in specialty" :value="spec._id" :key="spec._id" > {{spec.name}}</option>
                     </select>
                 </td>
+                <td > <div v-if="doctor.spec"> <input class="area" @change="editDoctor(doctor)" type="number" v-model="doctor.area"></div></td>
                 <td > <div v-if="doctor.spec"> <input @change="editDoctor(doctor)" v-model="doctor.number"></div></td>
                 <td > <div v-if="doctor.spec"> <input @change="editDoctor(doctor)" v-model="doctor.name"></div> </td>
                 <td > <div v-if="doctor.spec"> <input @change="editDoctor(doctor)" v-model="doctor.d1"></div></td>
@@ -71,12 +74,16 @@
         name: 'EditTable',
         data(){
             return {
-                doctors: [],
-                specialty: [],
                 deletedDoctors:[]
             }
         },
         computed:{
+            doctors(){
+                return this.$store.state.doctors;
+            },
+            specialty(){
+                return this.$store.getters.specialty
+            },
             doctorList(){
                 let docs = this.doctors.filter(doc => doc.spec);
                 docs = [...docs,{
@@ -91,17 +98,7 @@
         },
         methods:{
             reload(){
-                return Promise.all([
-                    DoctorService.getDoctors(),
-                    DoctorService.getSpecialty()
-                ]).then(([doctors,specialty])=>{
-                    if(doctors){
-                        this.doctors = doctors;
-                    }
-                    if(specialty){
-                        this.specialty = specialty;
-                    }
-                })
+                return this.$store.dispatch('reloadDoctors');
             },
             editDoctor(doctor,isSpec = false){
 
@@ -223,10 +220,13 @@
     .edit-table td .input-file{
         width: 100%;
     }
-    @media screen and (max-width: 1880px) {
+    @media screen and (max-width: 1910px) {
         .edit-table input, .edit-table select{
             max-width: 100px;
         }
     }
 
+    .doc-table .area{
+        width: 30px;
+    }
 </style>

@@ -1,9 +1,10 @@
 <template>
     <div class="home">
         <table class="doc-table w100">
+            <caption> Расписание работы подразделений поликлиники</caption>
             <thead>
                 <tr>
-                    <th>№ уч.</th>
+                    <th>Специалист</th>
                     <th>№ каб.</th>
                     <th>  Фото </th>
                     <th>ФИО.</th>
@@ -12,16 +13,14 @@
                     <th>Ср</th>
                     <th>Чт</th>
                     <th>Пт</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody class="w100">
-                <tr v-for="(doctor,index) in doctors" :key="doctor._id" class="w100">
-                    <td>{{index + 1}}</td>
+                <tr v-for="(doctor,index) in doctorList" :key="doctor._id" class="w100">
                     <td> {{getSpecialtyById(doctor.spec)}}</td>
+                    <td> {{doctor.number}}</td>
                     <td> <img class="doc-image" :src="doctor.image"> </td>
                     <td> {{doctor.name}}</td>
-                    <td> {{doctor.number}}</td>
                     <td> {{doctor.d1}}</td>
                     <td> {{doctor.d2}}</td>
                     <td> {{doctor.d3}}</td>
@@ -35,26 +34,22 @@
 
 <script>
 
-    import DoctorService from '../services/DoctorService'
     export default {
         name: 'ViewTable',
         data(){
             return {
-                doctors: []
+            }
+        },
+        computed: {
+            doctorList () {
+                return this.$store.getters.doctors;
+            },
+            specialty(){
+                return this.$store.getters.specialty
             }
         },
         mounted(){
-            return Promise.all([
-                DoctorService.getDoctors(),
-                DoctorService.getSpecialty()
-            ]).then(([doctors,specialty])=>{
-                if(doctors){
-                    this.doctors = doctors;
-                }
-                if(specialty){
-                    this.specialty = specialty;
-                }
-            })
+            return this.$store.dispatch('reloadDoctors');
         },
         methods:{
             getSpecialtyById(id){
@@ -111,5 +106,9 @@
         top: 2px;
         left: 2px;
         background: #ffd6ab;
+    }
+    .doc-table caption{
+        font-size: 19px;
+        font-weight: 600;
     }
 </style>

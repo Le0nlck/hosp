@@ -5,6 +5,7 @@ const baseName = "testbase";
 module.exports = function(app, client) {
     app.post('/addDoctor', (req, res) => {
         let doctor = {
+            area: req.body.area ? req.body.area : "",
             spec: req.body.spec ? req.body.spec : "",
             number: req.body.name ? req.body.name : "",
             name: req.body.name ? req.body.name : "",
@@ -69,6 +70,7 @@ module.exports = function(app, client) {
 
         doctorsToAdd.forEach((doc)=>{
             let newObj = {
+                area: doc.area,
                 spec: doc.spec,
                 number: doc.number,
                 name: doc.name,
@@ -84,6 +86,7 @@ module.exports = function(app, client) {
 
         doctorsToUpdate.forEach((doc)=>{
             awaitUpdates.push(db.collection('doctors').findOneAndUpdate({"_id" : ObjectID(doc._id)}, {$set:{
+                    area: doc.area,
                     spec: doc.spec,
                     number: doc.number,
                     name: doc.name,

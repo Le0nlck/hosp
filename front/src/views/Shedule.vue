@@ -1,11 +1,11 @@
 <template>
     <div class="home">
         <table class="doc-table w100">
+            <caption> Расписание работы врачей педиатров участковых</caption>
             <thead>
             <tr>
                 <th>№ уч.</th>
                 <th>№ каб.</th>
-                <th>  Фото </th>
                 <th>ФИО.</th>
                 <th>Пн</th>
                 <th>Вт</th>
@@ -16,10 +16,9 @@
             </tr>
             </thead>
             <tbody class="w100">
-            <tr v-for="(doctor,index) in doctors" :key="doctor._id" class="w100">
-                <td>{{index + 1}}</td>
-                <td> {{getSpecialtyById(doctor.spec)}}</td>
-                <td> <img class="doc-image" :src="doctor.image"> </td>
+            <tr v-for="doctor in doctorList" :key="doctor._id" class="w100">
+                <td>{{doctor.area}}</td>
+                <td> {{doctor.number}}</td>
                 <td> {{doctor.name}}</td>
                 <td> {{doctor.number}}</td>
                 <td> {{doctor.d1}}</td>
@@ -35,41 +34,21 @@
 
 <script>
 
-    import DoctorService from '../services/DoctorService'
     export default {
         name: 'ViewTable',
         data(){
-            return {
-                doctors: []
-            }
+            return{}
+        },
+        computed: {
+            doctorList() {
+                return this.$store.getters.doctors.filter(doc => doc.area).sort((doc, docCurr) => {
+                    return doc.area > docCurr.area ? 1 : -1;
+                });
+            },
         },
         mounted(){
-            return Promise.all([
-                DoctorService.getDoctors(),
-                DoctorService.getSpecialty()
-            ]).then(([doctors,specialty])=>{
-                if(doctors){
-                    this.doctors = doctors;
-                }
-                if(specialty){
-                    this.specialty = specialty;
-                }
-            })
+            return this.$store.dispatch('reloadDoctors');
         },
-        methods:{
-            getSpecialtyById(id){
-                let spec = this.specialty.find((special) =>{
-                    return special._id == id;
-                })
-                if (spec) {
-                    return spec.name;
-                }
-                else{
-                    return "Доктор, просто доктор"
-
-                }
-            }
-        }
     }
 </script>
 
