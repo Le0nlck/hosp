@@ -55,6 +55,9 @@ let DoctorService = {
     },
     saveDoctors: (doctors)=>{
         return callApi('post', 'saveDoctors', {doctors})
+    },
+    saveSpecialty: (specialty)=>{
+        return callApi('post', 'saveSpecialty', {specialty})
     }
 }
 

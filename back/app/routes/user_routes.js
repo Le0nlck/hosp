@@ -109,6 +109,40 @@ module.exports = function(app, client) {
         })
 
     });
+    app.post('/saveSpecialty', (req, res) => {
+
+
+        let awaitUpdates = [];
+        let specialty = req.body.specialty;
+        let specsToAdd = specialty.filter(spec => !spec._id);
+        let specsToUpdate = specialty.filter(spec => spec._id);
+        let specsToDelete = specialty.filter(spec => spec.isDeleted);
+
+        let db = client.db(baseName);
+
+        specsToAdd.forEach((spec)=>{
+            let newObj = {
+                name: spec.name
+            }
+            awaitUpdates.push(db.collection('spec').insertOne(newObj))
+        });
+
+        specsToUpdate.forEach((spec)=>{
+            awaitUpdates.push(db.collection('spec').findOneAndUpdate({"_id" : ObjectID(spec._id)}, {$set:{
+                    name: spec.name
+                }}));
+        });
+        specsToDelete.forEach((spec)=>{
+            awaitUpdates.push(db.collection('spec').findOneAndDelete({"_id" : ObjectID(spec._id)}));
+        });
+
+        Promise.all(awaitUpdates).then(()=>{
+            res.send("Сохранение прошло успешно")
+        }).catch((err) => {
+            res.send({'err': err});
+        })
+
+    });
 };
 
 

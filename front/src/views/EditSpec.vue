@@ -6,18 +6,20 @@
             <tr>
                 <th></th>
                 <th>Специальность</th>
+                <td></td>
             </tr>
             </thead>
             <tbody class="w100 edit-table">
             <tr v-for="(spec, index) in specialty" :key="spec._id" class="w100">
                 <td > {{index + 1}}</td>
-                <td > <div v-if="spec.name"> <input @change="editDoctor(doctor)" v-model="spec.name"></div></td>
+                <td > <div > <input @change="editSpecialty(spec)" v-model="spec.name"></div></td>
+                <td><button v-if="spec.name"  class="btn" @click="removeSpecialty(spec, index)">Удалить</button></td>
             </tr>
             </tbody>
         </table>
         <div class="content">
             <div class="buttons-box">
-                <button class="btn" @click="saveDoctors()" >Сохранить</button>
+                <button class="btn" @click="saveSpecialty()" >Сохранить</button>
             </div>
         </div>
 
@@ -36,7 +38,7 @@
         name: 'EditTable',
         data(){
             return {
-                deletedDoctors:[]
+                deletedSpecialty:[]
             }
         },
         computed:{
@@ -46,7 +48,7 @@
             specialty(){
                 let specs = this.specs.filter(spec => spec.name);
                 specs = [...specs,{
-                    name: "Терапевт"
+                    name: ""
                 }];
 
                 return specs;
@@ -59,53 +61,27 @@
             reload(){
                 return this.$store.dispatch('reloadSpec');
             },
-            editDoctor(spec){
+            editSpecialty(spec){
                 if(spec && !spec._id && !spec.inChange){
-                    this.spec.push(spec);
+                    this.specs.push(spec);
                 }
                 spec.inChange = true;
             },
-            saveDoctors(){
-                let specs = this.specs.filter(spec => spec.inChange || !spec._id);
-                let deleted = this.deletedDoctors.filter(doc => doc._id);
-                deleted.forEach((doc)=> {doc.isDeleted = true});
-                let resDocs = doctors.concat(deleted);
+            saveSpecialty(){
+                let specs = this.specs.filter(spec => (spec.name && spec.inChange || !spec._id));
+                let deleted = this.deletedSpecialty.filter(spec => spec._id || !spec.name);
+                deleted = deleted.concat(this.specs.filter(spec => !spec.name && spec._id ));
+                deleted.forEach((doc)=> {doc.isDeleted = true });
+                let resSpecs = specs.concat(deleted);
 
-                return DoctorService.saveDoctors(resDocs).then(()=>{
+                return DoctorService.saveSpecialty(resSpecs).then(()=>{
                     this.reload();
-                    this.deletedDoctors = [];
+                    this.deletedSpecialty = [];
                 });
             },
-            removeDoctor(doctor, index){
-                if(confirm("Вы уверены, что хотите удалить специалиста?")){
-                    this.deletedDoctors = this.deletedDoctors.concat(cloneObj(this.doctors.splice(index,1)));
-                }
-            },
-            getSpecialtyById(id){
-                let spec = this.specialty.find((special) =>{
-                    return special._id == id;
-                })
-                if (spec) {
-                    return spec.name;
-                }
-                else{
-                    return "Доктор, просто доктор"
-
-                }
-            },
-            onFileSelected(doctor, event){
-                doctor.file = event.target.files[0];
-            },
-            onUpload(doctor){
-                if(doctor && doctor.file){
-                    let fr = new FileReader();
-                    fr.onload = (event)=>{
-                        doctor.image = event.target.result;
-                        doctor = {...doctor};
-                    };
-
-                    fr.readAsDataURL(doctor.file);
-                    doctor.inChange = true;
+            removeSpecialty(spec, index){
+                if(confirm("Вы уверены, что хотите удалить специальность?") && index >= 0){
+                    this.deletedSpecialty = this.deletedSpecialty.concat(cloneObj(this.specs.splice(index,1)));
                 }
             }
         }
