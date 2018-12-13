@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <table class="doc-table w100">
-            <caption>Расписание работы врачей педиатров участковых</caption>
+            <caption>Редактирование специалистов</caption>
             <thead class="w100">
             <tr>
                 <th></th>

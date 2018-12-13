@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <table class="doc-table w100">
-            <caption>Расписание работы врачей педиатров участковых</caption>
+            <caption>Редактирование</caption>
             <thead class="w100">
                 <tr>
                     <th></th>
@@ -41,7 +41,7 @@
                     <div v-if="doctor.spec">
                         <input class="input-file" type="file" @change="onFileSelected(doctor, $event)">
                         <div><button @click="onUpload(doctor)">
-                            Upload
+                            Загрузить
                         </button></div>
                     </div>
 
