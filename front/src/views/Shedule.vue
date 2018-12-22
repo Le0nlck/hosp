@@ -6,6 +6,7 @@
             <tr>
                 <th>№ уч.</th>
                 <th>№ каб.</th>
+                <th>  Фото </th>
                 <th>ФИО.</th>
                 <th>Пн</th>
                 <th>Вт</th>
@@ -19,6 +20,7 @@
             <tr v-for="doctor in doctorList" :key="doctor._id" class="w100">
                 <td>{{doctor.area}}</td>
                 <td> {{doctor.number}}</td>
+                <td> <img class="doc-image" :src="doctor.image"> </td>
                 <td> {{doctor.name}}</td>
                 <td> {{doctor.number}}</td>
                 <td> {{doctor.d1}}</td>

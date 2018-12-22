@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/ViewTable.vue'
+import EditTable from './views/EditTable.vue'
+import EditSpec from './views/EditSpec.vue'
+import Shedule from './views/Shedule.vue'
 
 Vue.use(Router)
 
@@ -14,29 +17,17 @@ export default new Router({
         {
             path: '/editTable',
             name: 'editTable',
-            // route level code-splitting
-            // this generates a separate chunk (about.[hash].js) for this route
-            // which is lazy-loaded when the route is visited.
-            component: function () {
-                return import(/* webpackChunkName: "about" */ './views/EditTable.vue')
-            }
+            component: EditTable
         },
         {
             path: '/editSpec',
             name: 'editSpec',
-            // route level code-splitting
-            // this generates a separate chunk (about.[hash].js) for this route
-            // which is lazy-loaded when the route is visited.
-            component: function () {
-                return import(/* webpackChunkName: "about" */ './views/EditSpec.vue')
-            }
+            component: EditSpec
         },
         {
             path: '/shedule',
             name: 'shedule',
-            component: function () {
-                return import(/* webpackChunkName: "about" */ './views/Shedule.vue')
-            }
+            component: Shedule
         },
     ]
 })
