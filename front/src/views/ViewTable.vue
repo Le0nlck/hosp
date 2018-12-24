@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div class="home view-table">
         <table class="doc-table w100">
             <caption> Расписание работы подразделений поликлиники</caption>
             <thead>
@@ -42,7 +42,7 @@
         },
         computed: {
             doctorList () {
-                return this.$store.getters.doctors;
+                return this.$store.getters.doctors.filter(doc => !doc.area);
             },
             specialty(){
                 return this.$store.getters.specialty
@@ -110,5 +110,10 @@
     .doc-table caption{
         font-size: 19px;
         font-weight: 600;
+    }
+    .view-table {
+        table th,td{
+            border-right: 1px solid gray;
+        }
     }
 </style>

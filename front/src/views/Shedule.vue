@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div class="home view-table">
         <table class="doc-table w100">
             <caption> Расписание работы врачей педиатров участковых</caption>
             <thead>
@@ -13,7 +13,6 @@
                 <th>Ср</th>
                 <th>Чт</th>
                 <th>Пт</th>
-                <th></th>
             </tr>
             </thead>
             <tbody class="w100">
@@ -22,7 +21,6 @@
                 <td> {{doctor.number}}</td>
                 <td> <img class="doc-image" :src="doctor.image"> </td>
                 <td> {{doctor.name}}</td>
-                <td> {{doctor.number}}</td>
                 <td> {{doctor.d1}}</td>
                 <td> {{doctor.d2}}</td>
                 <td> {{doctor.d3}}</td>
