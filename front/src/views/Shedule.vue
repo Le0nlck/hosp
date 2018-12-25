@@ -56,7 +56,7 @@
 
     .td-image{
         display: block;
-        height: 35px;
+        height: 33px;
         margin-right: -1px;
     }
     .home{

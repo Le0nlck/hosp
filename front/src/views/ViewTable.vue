@@ -79,7 +79,7 @@
     .doc-table{
         border-collapse: collapse;
         .doc-image{
-            height: 35px;
+            height: 33px;
         }
     }
     .doc-table th {
