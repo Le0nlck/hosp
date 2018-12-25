@@ -6,7 +6,7 @@
                 <tr>
                     <th>Специалист</th>
                     <th>№ каб.</th>
-                    <th>  Фото </th>
+                    <th class=""> Фото </th>
                     <th>ФИО.</th>
                     <th>Пн</th>
                     <th>Вт</th>
@@ -19,7 +19,7 @@
                 <tr v-for="(doctor,index) in doctorList" :key="doctor._id" class="w100">
                     <td> {{getSpecialtyById(doctor.spec)}}</td>
                     <td> {{doctor.number}}</td>
-                    <td> <img class="doc-image" :src="doctor.image"> </td>
+                    <td class="td-image"> <img class="doc-image" :src="doctor.image"> </td>
                     <td> {{doctor.name}}</td>
                     <td> {{doctor.d1}}</td>
                     <td> {{doctor.d2}}</td>
@@ -79,11 +79,11 @@
     .doc-table{
         border-collapse: collapse;
         .doc-image{
-            height: 40px;
+            height: 35px;
         }
     }
     .doc-table th {
-        padding: 10px;
+        padding: 7px;
     }
     .doc-table thead{
         background-color: #bfac8f;
@@ -112,8 +112,14 @@
         font-weight: 600;
     }
     .view-table {
+        table td{
+            padding: 0;
+        }
         table th,td{
             border-right: 1px solid gray;
+        }
+        table td:last-child,th:last-child{
+            border-right: 0;
         }
     }
 </style>

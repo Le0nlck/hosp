@@ -93,20 +93,10 @@
         width: 100%;
     }
 
-
-    .doc-table{
-        border-collapse: collapse;
-    }
-    .doc-table td, .doc-table th {
-        padding: 5px;
-    }
     .doc-table thead{
         background-color: #bfac8f;
     }
 
-    .doc-image{
-        height: 40px;
-    }
     .doc-table tbody th {
         text-align: left;
         font-size: 18px;

@@ -4,9 +4,9 @@
             <caption> Расписание работы врачей педиатров участковых</caption>
             <thead>
             <tr>
-                <th>№ уч.</th>
+                <th>Участок</th>
                 <th>№ каб.</th>
-                <th>  Фото </th>
+                <th class="">  Фото </th>
                 <th>ФИО.</th>
                 <th>Пн</th>
                 <th>Вт</th>
@@ -19,7 +19,7 @@
             <tr v-for="doctor in doctorList" :key="doctor._id" class="w100">
                 <td>{{doctor.area}}</td>
                 <td> {{doctor.number}}</td>
-                <td> <img class="doc-image" :src="doctor.image"> </td>
+                <td class="td-image"> <img class="doc-image" :src="doctor.image"> </td>
                 <td> {{doctor.name}}</td>
                 <td> {{doctor.d1}}</td>
                 <td> {{doctor.d2}}</td>
@@ -42,7 +42,7 @@
         computed: {
             doctorList() {
                 return this.$store.getters.doctors.filter(doc => doc.area).sort((doc, docCurr) => {
-                    return doc.area > docCurr.area ? 1 : -1;
+                    return parseInt(doc.area) > parseInt(docCurr.area) ? 1 : -1;
                 });
             },
         },
@@ -54,20 +54,16 @@
 
 <style lang="scss" >
 
+    .td-image{
+        display: block;
+        height: 35px;
+        margin-right: -1px;
+    }
     .home{
         margin-top: 20px;
     }
     .w100{
         width: 100%;
-    }
-    .doc-table{
-        border-collapse: collapse;
-        .doc-image{
-            height: 40px;
-        }
-    }
-    .doc-table th {
-        padding: 10px;
     }
     .doc-table thead{
         background-color: #bfac8f;
